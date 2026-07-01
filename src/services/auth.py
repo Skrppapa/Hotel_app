@@ -1,12 +1,13 @@
 from datetime import timedelta, datetime, timezone
 from fastapi import HTTPException
 from src.config import settings
-from passlib.context import CryptContext
+from pwdlib import PasswordHash
 import jwt
 
 class AuthService:
 
-    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    pwd_context = PasswordHash.recommended()
+    pwd_context = PasswordHash.recommended()
 
     # Упрощенная функция из документации
     def create_access_token(self, data: dict) -> str:

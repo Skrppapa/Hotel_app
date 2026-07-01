@@ -9,7 +9,7 @@ class HotelAdd(BaseModel):
 class Hotel(HotelAdd):
     id: int
 
-    model_config = ConfigDict(from_attributes=True) # Нужен для перевода ответа из модели алхимии в объект Pydantic схемы (Алхимия возвращает не словарь)
+    # model_config = ConfigDict(from_attributes=True) # Нужен для перевода ответа из модели алхимии в объект Pydantic схемы (Алхимия возвращает не словарь)
 
 
 class HotelPATCH(BaseModel):
