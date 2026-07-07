@@ -10,7 +10,7 @@ router = APIRouter(prefix="/hotels", tags=["Номера"])
 async def get_rooms(
         hotel_id: int,
         db: DBDep,
-        date_from: date = Query(example = "2026-08-01"),
+        date_from: date = Query(example= "2026-08-01"),
         date_to: date = Query(example = "2026-08-10")):
 
         return await db.rooms.get_filtered_by_time(hotel_id=hotel_id, date_from=date_from, date_to=date_to)

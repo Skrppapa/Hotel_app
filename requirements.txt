@@ -14,12 +14,13 @@ certifi==2026.2.25
 cffi==2.0.0
 charset-normalizer==3.4.4
 click==8.3.1
-cockpit @ file:///builddir/build/BUILD/cockpit-362-build/cockpit-362/tmp/wheel/cockpit-362-py3-none-any.whl#sha256=a58100d7b054f1045e44ec3dd522c668a810e37d4f519988ec469b87a17d1e7c
+cockpit @ file:///builddir/build/BUILD/cockpit-364-build/cockpit-364/tmp/wheel/cockpit-364-py3-none-any.whl#sha256=82c79404b2528627fced2a7ebf481b040ddae5fe359114bcfa0b986e85b0ed79
 crypt_r==3.13.1
 cupshelpers==1.0
 dasbus==1.7
 dbus-python==1.4.0
 dbus_next==0.2.3
+distlib==0.4.0
 distro==1.9.0
 dnf==4.24.0
 dnspython==2.8.0
@@ -30,6 +31,7 @@ fastapi-cloud-cli==0.14.1
 fastar==0.8.0
 fedora-third-party==0.10
 file-magic==0.4.0
+filelock==3.15.4
 greenlet==3.3.2
 h11==0.16.0
 html2text==2025.4.15
@@ -95,6 +97,7 @@ pyudev==0.24.4
 pyxdg==0.28
 PyYAML==6.0.3
 RapidFuzz==3.14.3
+redis==8.0.1
 regex==2026.5.9
 requests==2.33.1
 requests-file==3.0.0
@@ -122,6 +125,7 @@ typing_extensions==4.15.0
 urllib3==2.6.3
 uvicorn==0.41.0
 uvloop==0.22.1
+virtualenv==20.35.4
 watchfiles==1.1.1
 websockets==16.0
 xkbregistry==0.3
