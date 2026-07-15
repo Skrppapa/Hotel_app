@@ -1,4 +1,5 @@
 alembic==1.18.4
+amqp==5.3.1
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.12.1
@@ -7,13 +8,18 @@ argon2-cffi==25.1.0
 argon2-cffi-bindings==25.1.0
 asyncpg==0.31.0
 bcrypt==5.0.0
+billiard==4.2.4
 black==26.3.1
 blivet @ file:///builddir/build/BUILD/python-blivet-3.13.2-build/blivet-3.13.2
 Brlapi==0.8.7
+celery==5.6.3
 certifi==2026.2.25
 cffi==2.0.0
 charset-normalizer==3.4.4
 click==8.3.1
+click-didyoumean==0.3.1
+click-plugins==1.1.1.2
+click-repl==0.3.0
 cockpit @ file:///builddir/build/BUILD/cockpit-364-build/cockpit-364/tmp/wheel/cockpit-364-py3-none-any.whl#sha256=82c79404b2528627fced2a7ebf481b040ddae5fe359114bcfa0b986e85b0ed79
 crypt_r==3.13.1
 cupshelpers==1.0
@@ -39,9 +45,10 @@ html2text==2025.4.15
 httpcore==1.0.9
 httptools==0.7.1
 httpx==0.28.1
-idna==3.11
+idna==3.18
 iso639==0.1.4
 Jinja2==3.1.6
+kombu==5.6.2
 langtable==0.0.71
 libcomps==0.1.24
 libdnf==0.75.0
@@ -61,10 +68,11 @@ pendulum==3.2.0
 perf==0.1
 pexpect==4.9.0
 pid==3.0.4
-pillow==12.2.0
+pillow==12.3.0
 platformdirs==4.9.4
 productmd==1.50
 progressbar2==4.5.0
+prompt_toolkit==3.0.52
 psutil==7.2.2
 ptyprocess==0.7.0
 pwdlib==0.3.0
@@ -125,10 +133,13 @@ typer==0.24.1
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2026.2
+tzlocal==5.4.4
 urllib3==2.6.3
 uvicorn==0.41.0
 uvloop==0.22.1
+vine==5.1.0
 virtualenv==20.35.4
 watchfiles==1.1.1
+wcwidth==0.8.2
 websockets==16.0
 xkbregistry==0.3
