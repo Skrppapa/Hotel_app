@@ -46,6 +46,7 @@ httpcore==1.0.9
 httptools==0.7.1
 httpx==0.28.1
 idna==3.18
+iniconfig==2.3.0
 iso639==0.1.4
 Jinja2==3.1.6
 kombu==5.6.2
@@ -70,6 +71,7 @@ pexpect==4.9.0
 pid==3.0.4
 pillow==12.3.0
 platformdirs==4.9.4
+pluggy==1.6.0
 productmd==1.50
 progressbar2==4.5.0
 prompt_toolkit==3.0.52
@@ -93,6 +95,9 @@ PyJWT==2.12.1
 pykickstart @ file:///builddir/build/BUILD/pykickstart-3.69-build/pykickstart-3.69
 pyparted==3.13.0
 PySocks==1.7.1
+pytest==9.1.1
+pytest-asyncio==1.4.0
+pytest-dotenv==0.5.2
 python-augeas==1.2.0
 python-bugzilla==3.3.0
 python-dateutil==2.9.0.post0

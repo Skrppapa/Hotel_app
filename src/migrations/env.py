@@ -12,11 +12,7 @@ sys.path.insert(0, str(BASE_DIR))
 
 from src.config import settings
 from src.database import Base # target_metadata = Base.metadata Для этой строки импортируем Base
-from src.models.hotels import HotelsOrm    # Важно импортировать еще и модели!!! Они будут светиться серым - это нормально
-from src.models.rooms import RoomsOrm
-from src.models.users import UsersOrm
-from src.models.bookings import BookingsOrm
-from src.models.facilities import FacilitiesOrm
+from src.models import *
 from alembic import context
 
 # this is the Alembic Config object, which provides
