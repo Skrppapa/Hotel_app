@@ -1,6 +1,8 @@
 import json
 import pytest
 from sqlalchemy.ext.asyncio import async_sessionmaker
+
+from src.api.dependencies import get_db
 from src.config import settings
 from src.database import Base, engine_null_pull, engine, async_session_maker_null_pull
 from src.main import app
@@ -17,11 +19,20 @@ def check_test_mode():
     assert settings.MODE == "TEST"
 
 
-@pytest.fixture(scope="function")
-async def db() -> DBManager:
+async def get_db_null_pool():
     async with DBManager(session_factory=async_session_maker_null_pull) as db:
         yield db
 
+
+@pytest.fixture(scope="function")
+async def db() -> DBManager:
+    async for db in get_db_null_pool():
+        yield db
+
+# Подменяем зависимость.
+# В тесте api функция test_get_hotel не использует db напрямую, она тестирует саму ручку внутри которой вызывается настоящий db_manager
+# Здесь, для тестовой среды мы подменяем эту зависимость
+app.dependency_overrides[get_db] = get_db_null_pool
 
 @pytest.fixture(scope="session", autouse=True)
 async def setup_database(check_test_mode):
