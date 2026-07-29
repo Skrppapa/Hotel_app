@@ -29,7 +29,8 @@ async def test_booking_crud(db):
     )
 
     await db.bookings.edit(new_booking_data, exclude_unset=True, id = new_booking.id)
-    update_booking = await db.bookings.get_one_or_none()
+    # update_booking = await db.bookings.get_one_or_none()
+    update_booking = await db.bookings.get_one_or_none(id=new_booking.id)
 
     assert update_booking
     assert update_booking.id == new_booking.id
@@ -37,5 +38,5 @@ async def test_booking_crud(db):
 
     # Удалить бронь
     await db.bookings.delete(id = update_booking.id)
-    booking = await db.bookings.get_one_or_none()
+    booking = await db.bookings.get_one_or_none(id=update_booking.id)
     assert not booking

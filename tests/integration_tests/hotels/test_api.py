@@ -8,6 +8,6 @@ async def test_get_hotel(ac):
                 "date_to": "2027-01-15"
             }
     )
-    print(f"{response.json()=}")
+    # print(f"{response.json()=}")
 
     assert response.status_code == 200

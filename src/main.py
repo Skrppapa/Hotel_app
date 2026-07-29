@@ -6,6 +6,8 @@ import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+from src.config import settings
+
 sys.path.append(str(Path(__file__).parent.parent))  # Дает понять интерпретатору где он находится, родительскую папку - src и род. папку самой src - FastAPI_Course
 
 from src.init import redis_manager
@@ -24,6 +26,9 @@ async def lifespan(app: FastAPI):
     yield
     # При выключении/перезагрузке приложения
     await redis_manager.close()
+
+if settings.MODE == "TEST":
+    FastAPICache.init(RedisBackend(redis_manager.redis), prefix="fastapi-cache")
 
 app = FastAPI(lifespan=lifespan)
 

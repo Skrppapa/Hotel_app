@@ -1,7 +1,14 @@
 import json
+from unittest import mock
+
+# Мок - это подмена чего-либо на пустышку, на время проведения тестов.
+# Ниже мок - первый аргумент это абсолютный путь до декоратора.
+# Второй аргумент это функция пустышка на которую мы подменяем.
+
+mock.patch("fastapi_cache.decorator.cache", lambda *args, **kwargs: lambda f: f).start()
+
 import pytest
 from sqlalchemy.ext.asyncio import async_sessionmaker
-
 from src.api.dependencies import get_db
 from src.config import settings
 from src.database import Base, engine_null_pull, engine, async_session_maker_null_pull
@@ -71,6 +78,19 @@ async def register_user(ac, setup_database):
         }
     )
 
+
+@pytest.fixture(scope="session")
+async def authenticated_ac(ac, register_user):
+    await ac.post(
+        "/auth/login",
+        json={
+            "email": "test@mail.com",
+            "password": "12345"
+        }
+    )
+
+    assert ac.cookies["access_token"]
+    yield ac
 
 
 
