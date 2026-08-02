@@ -4,8 +4,6 @@ from datetime import date
 from sqlalchemy import select, func
 
 
-
-
 def rooms_ids_for_booking(
         date_from: date,
         date_to: date,

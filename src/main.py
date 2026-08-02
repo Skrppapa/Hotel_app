@@ -1,14 +1,14 @@
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent))  # Дает понять интерпретатору где он находится, родительскую папку - src и род. папку самой src - FastAPI_Course
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-import sys
 from contextlib import asynccontextmanager
-from pathlib import Path
-
 from src.config import settings
-
-sys.path.append(str(Path(__file__).parent.parent))  # Дает понять интерпретатору где он находится, родительскую папку - src и род. папку самой src - FastAPI_Course
 
 from src.init import redis_manager
 from src.api.hotels import router as router_hotels
