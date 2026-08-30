@@ -7,7 +7,6 @@ import jwt
 class AuthService:
 
     pwd_context = PasswordHash.recommended()
-    pwd_context = PasswordHash.recommended()
 
     # Упрощенная функция из документации
     def create_access_token(self, data: dict) -> str:

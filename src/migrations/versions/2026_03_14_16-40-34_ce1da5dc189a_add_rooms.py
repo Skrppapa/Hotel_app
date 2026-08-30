@@ -1,13 +1,4 @@
-"""add rooms
-
-Revision ID: ce1da5dc189a
-Revises: 9812612dd2f6
-Create Date: 2026-03-14 16:40:34.932843
-
-"""
-
 from typing import Sequence, Union
-
 from alembic import op
 import sqlalchemy as sa
 

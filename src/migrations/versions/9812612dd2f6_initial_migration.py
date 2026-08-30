@@ -1,12 +1,4 @@
-"""initial migration
-
-Revision ID: 9812612dd2f6
-Revises: 
-Create Date: 2026-03-13 15:49:28.979200
-
-"""
 from typing import Sequence, Union
-
 from alembic import op
 import sqlalchemy as sa
 

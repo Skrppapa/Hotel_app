@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 import json
 from unittest import mock
 
@@ -8,14 +9,13 @@ from unittest import mock
 mock.patch("fastapi_cache.decorator.cache", lambda *args, **kwargs: lambda f: f).start()
 
 import pytest
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from src.api.dependencies import get_db
 from src.config import settings
-from src.database import Base, engine_null_pull, engine, async_session_maker_null_pull
+from src.database import Base, engine_null_pull, async_session_maker_null_pull
 from src.main import app
-from src.models import *
+from src.models import * # noqa
 from httpx import AsyncClient, ASGITransport
-from src.repositories.hotels import HotelsRepository
+
 from src.schemas.hotels import HotelAdd
 from src.schemas.rooms import RoomAdd
 from src.utils.db_manager import DBManager
@@ -50,6 +50,7 @@ async def setup_database(check_test_mode):
     # Добавление тестовых данных из файлов
     with open('tests/mock_hotels.json', 'r', encoding="utf-8") as hotel_file:
         hotels_data = json.load(hotel_file)
+
     with open('tests/mock_rooms.json', 'r', encoding="utf-8") as room_file:
         rooms_data = json.load(room_file)
 

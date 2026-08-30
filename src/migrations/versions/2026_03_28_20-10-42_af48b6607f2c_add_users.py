@@ -1,13 +1,4 @@
-"""Add users
-
-Revision ID: af48b6607f2c
-Revises: ce1da5dc189a
-Create Date: 2026-03-28 20:10:42.701038
-
-"""
-
 from typing import Sequence, Union
-
 from alembic import op
 import sqlalchemy as sa
 

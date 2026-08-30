@@ -1,0 +1,5 @@
+[lint]
+ignore = ["I001"]
+
+[lint.isort]
+lines-between-types = 0

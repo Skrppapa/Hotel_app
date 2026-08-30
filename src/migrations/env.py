@@ -12,7 +12,7 @@ sys.path.insert(0, str(BASE_DIR))
 
 from src.config import settings
 from src.database import Base # target_metadata = Base.metadata Для этой строки импортируем Base
-from src.models import *
+from src.models import * # noqa
 from alembic import context
 
 # this is the Alembic Config object, which provides
