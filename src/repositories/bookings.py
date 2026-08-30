@@ -1,7 +1,10 @@
 from datetime import date
+from typing import Sequence
 
 from fastapi import HTTPException
 from sqlalchemy import select
+
+from exceptions import AllRoomsAreBookedException
 from src.repositories.base import BaseRepository
 from src.models.bookings import BookingsOrm
 from src.repositories.mappers.mappers import BookingDataMapper
@@ -30,12 +33,13 @@ class BookingsRepository(BaseRepository):
         )
 
         rooms_ids_to_book_res = await self.session.execute(rooms_ids_for_get)
-        rooms_ids_to_book: list[int] = rooms_ids_to_book_res.scalars().all()
+        rooms_ids_to_book: Sequence[int] = rooms_ids_to_book_res.scalars().all()
 
         # Если id нашего номера находится в списке rooms_ids_to_book значит можем забронировать
         if data.room_id in rooms_ids_to_book:
             new_booking = await self.add(data)
             return new_booking
-        else:
-            raise HTTPException(500) # Пока что 500 ошибка
+
+        raise AllRoomsAreBookedException
+
 
