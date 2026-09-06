@@ -4,7 +4,7 @@ from httpx import AsyncClient
 
 @pytest.mark.parametrize("email, password, status_code", [
     ("test123@mail.com", "35435", 200),
-    ("test123@mail.com", "35435", 400), # Уже зарегистрирован
+    ("test123@mail.com", "35435", 409), # Уже зарегистрирован
     ("rand@mail.ru", "strong_pass", 200),
     ("abcde", "strong_pass", 422), # Pydantic status_code
     ("abcde@mail", "strong_pass", 422),

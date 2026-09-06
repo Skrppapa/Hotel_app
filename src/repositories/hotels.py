@@ -1,5 +1,7 @@
 from datetime import date
 from sqlalchemy import select
+
+from exceptions import ConflictOfEqualDateException, ConflictDateException
 from src.models.rooms import RoomsOrm
 from src.repositories.base import BaseRepository
 from src.models.hotels import HotelsOrm

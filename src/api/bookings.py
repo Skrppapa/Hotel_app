@@ -4,7 +4,7 @@ from exceptions import ObjectNotFoundException, AllRoomsAreBookedException
 from schemas.hotels import Hotel
 from schemas.rooms import Room
 from src.api.dependencies import DBDep, UserIdDep
-from src.schemas.bookings import BookingAddRequest, BookingAdd, Booking, BookingPatch
+from src.schemas.bookings import BookingAddRequest, BookingAdd
 
 
 router = APIRouter(prefix="/bookings", tags=["Бронирования"])
