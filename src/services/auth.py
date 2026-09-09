@@ -1,10 +1,11 @@
 from datetime import timedelta, datetime, timezone
 from fastapi import HTTPException
+from services.base import BaseService
 from src.config import settings
 from pwdlib import PasswordHash
 import jwt
 
-class AuthService:
+class AuthService(BaseService):
 
     pwd_context = PasswordHash.recommended()
 
