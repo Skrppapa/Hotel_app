@@ -11,6 +11,12 @@ class NabronirivalException(Exception):
 class ObjectNotFoundException(NabronirivalException):
     detail = "Объект не найден"
 
+class RoomNotFoundException(NabronirivalException):
+    detail = "Номер не найден"
+
+class HotelNotFoundException(NabronirivalException):
+    detail = "Отель не найден"
+
 class AllRoomsAreBookedException(NabronirivalException):
     detail = "Не осталось свободных номеров"
 
@@ -28,8 +34,6 @@ def check_date_to_after_date_from(date_from: date, date_to: date) -> None:
         raise HTTPException(status_code=422, detail="Дата выезда не может быть позже даты заезда")
 
 
-
-
 class NabronirovalHTTPException(HTTPException):
     status_code = 500
     detail = None
@@ -44,3 +48,8 @@ class HotelNotFoundHTTPException(NabronirovalHTTPException):
 class RoomNotFoundHTTPException(NabronirovalHTTPException):
     status_code = 404
     detail = "Номер не найден"
+
+class AllRoomsAreBookedHTTPException(NabronirovalHTTPException):
+    status_code = 409
+    detail = "Не осталось свободных номеров"
+

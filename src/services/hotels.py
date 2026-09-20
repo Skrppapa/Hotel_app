@@ -1,6 +1,6 @@
 from datetime import date
-from exceptions import check_date_to_after_date_from
-from schemas.hotels import HotelAdd, HotelPATCH
+from exceptions import check_date_to_after_date_from, ObjectNotFoundException, HotelNotFoundException
+from schemas.hotels import HotelAdd, HotelPATCH, Hotel
 from services.base import BaseService
 
 
@@ -37,13 +37,21 @@ class HotelService(BaseService):
         return hotel
 
 
-    async def edit_hotel(self, hotel_id: int, hotel_data: HotelAdd):
+    async def edit_hotel(
+            self,
+            hotel_id: int,
+            hotel_data: HotelAdd
+    ):
         await self.db.hotels.edit(hotel_data, id=hotel_id)
         await self.db.commit()
         return
 
 
-    async def update_patch_hotel(self, hotel_id: int, hotel_data: HotelPATCH):
+    async def update_patch_hotel(
+            self,
+            hotel_id: int,
+            hotel_data: HotelPATCH
+    ):
         await self.db.hotels.edit(hotel_data, exclude_unset=True, id=hotel_id)
         await self.db.commit()
         return
@@ -53,4 +61,10 @@ class HotelService(BaseService):
         await self.db.hotels.delete(id=hotel_id)
         await self.db.commit()
         return
+
+    async def get_hotel_with_check(self, hotel_id: int) -> Hotel:
+        try:
+            return await self.db.hotels.get_one(hotel_id)  # Проверяем что отель существует
+        except ObjectNotFoundException:
+            raise HotelNotFoundException
 
