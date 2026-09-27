@@ -1,5 +1,5 @@
 from datetime import date
-from exceptions import check_date_to_after_date_from, ObjectNotFoundException, HotelNotFoundException
+from src.exceptions import check_date_to_after_date_from, ObjectNotFoundException, HotelNotFoundException
 from schemas.hotels import HotelAdd, HotelPATCH, Hotel
 from services.base import BaseService
 

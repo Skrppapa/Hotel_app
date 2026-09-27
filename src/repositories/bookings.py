@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Sequence
 from sqlalchemy import select
-from exceptions import AllRoomsAreBookedException
+from src.exceptions import AllRoomsAreBookedException
 from src.repositories.base import BaseRepository
 from src.models.bookings import BookingsOrm
 from src.repositories.mappers.mappers import BookingDataMapper
@@ -38,5 +38,3 @@ class BookingsRepository(BaseRepository):
             return new_booking
 
         raise AllRoomsAreBookedException
-
-

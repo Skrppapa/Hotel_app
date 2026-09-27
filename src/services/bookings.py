@@ -1,5 +1,5 @@
 from api.dependencies import UserIdDep
-from exceptions import ObjectNotFoundException, RoomNotFoundException
+from src.exceptions import ObjectNotFoundException, RoomNotFoundException
 from schemas.bookings import BookingAddRequest, BookingAdd
 from schemas.hotels import Hotel
 from schemas.rooms import Room

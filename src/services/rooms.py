@@ -1,6 +1,6 @@
 from datetime import date
 
-from exceptions import check_date_to_after_date_from, ObjectNotFoundException, HotelNotFoundException, \
+from src.exceptions import check_date_to_after_date_from, ObjectNotFoundException, HotelNotFoundException, \
     RoomNotFoundException
 from schemas.facility import RoomFacilityAdd
 from schemas.rooms import RoomAddRequest, RoomAdd, RoomPatchRequest, RoomPatch, Room
@@ -42,9 +42,10 @@ class RoomsService(BaseService):
             rooms_facilities_data = [
                 RoomFacilityAdd(room_id=room.id, facility_id=f_id) for f_id in room_data.facility_ids
                 ]
-            await self.db.rooms_facilities.add_bulk(rooms_facilities_data)
+            if rooms_facilities_data:
+                await self.db.rooms_facilities.add_bulk(rooms_facilities_data)
             await self.db.commit()  # Только здесь делаем коммит. Мы в рамках одной транзакции делаем 2 запроса (на добавление номера и на добавление удобств) и только потом коммитим.
-
+            return room
 
     async def edit_room(
             self, 

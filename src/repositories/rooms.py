@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
-from exceptions import ConflictOfEqualDateException, ConflictDateException, ObjectNotFoundException, \
+from src.exceptions import ConflictOfEqualDateException, ConflictDateException, ObjectNotFoundException, \
     RoomNotFoundException
 from src.repositories.base import BaseRepository
 from src.repositories.mappers.mappers import RoomDataMapper
@@ -47,22 +47,3 @@ class RoomsRepository(BaseRepository):
         except NoResultFound:
             raise RoomNotFoundException
         return RoomWithRels.model_validate(model)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

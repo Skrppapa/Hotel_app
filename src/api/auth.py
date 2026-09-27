@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Response
-from exceptions import EmailNotRegisteredException, EmailNotRegisteredHTTPException, \
+from src.exceptions import EmailNotRegisteredException, EmailNotRegisteredHTTPException, \
     IncorrectPasswordException, IncorrectPasswordHTTPException, UserAlreadyExistsException, \
     UserEmailAlreadyExistsHTTPException
 from src.api.dependencies import UserIdDep, DBDep

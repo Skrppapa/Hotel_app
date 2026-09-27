@@ -4,7 +4,7 @@ from sqlalchemy import select, insert, delete, update
 from pydantic import BaseModel
 from sqlalchemy.exc import NoResultFound, IntegrityError
 from asyncpg.exceptions import UniqueViolationError
-from exceptions import ObjectNotFoundException, ObjectAlreadyExistsException
+from src.exceptions import ObjectNotFoundException, ObjectAlreadyExistsException
 from src.repositories.mappers.base import DataMapper
 
 
@@ -74,5 +74,3 @@ class BaseRepository:
     async def delete(self, **filter_by) -> None:
         delete_stmt = delete(self.model).filter_by(**filter_by)
         await self.session.execute(delete_stmt)
-
-

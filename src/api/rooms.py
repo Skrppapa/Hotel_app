@@ -3,7 +3,7 @@ from services.rooms import RoomsService
 from src.api.dependencies import DBDep
 from src.schemas.rooms import RoomAddRequest, RoomPatchRequest
 from datetime import date
-from exceptions import HotelNotFoundHTTPException, RoomNotFoundHTTPException, RoomNotFoundException, HotelNotFoundException
+from src.exceptions import HotelNotFoundHTTPException, RoomNotFoundHTTPException, RoomNotFoundException, HotelNotFoundException
 
 router = APIRouter(prefix="/hotels", tags=["Номера"])
 

@@ -1,7 +1,7 @@
 from datetime import date
 from fastapi import Body, Query, APIRouter
 from fastapi_cache.decorator import cache
-from exceptions import ObjectNotFoundException, HotelNotFoundHTTPException
+from src.exceptions import ObjectNotFoundException, HotelNotFoundHTTPException
 from services.hotels import HotelService
 from src.api.dependencies import PaginationDep, DBDep
 from src.schemas.hotels import HotelAdd, HotelPATCH

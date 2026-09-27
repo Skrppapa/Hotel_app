@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime, timezone
-from exceptions import IncorrectTokenException, ObjectAlreadyExistsException, UserAlreadyExistsException, \
+from src.exceptions import IncorrectTokenException, ObjectAlreadyExistsException, UserAlreadyExistsException, \
     EmailNotRegisteredException, IncorrectPasswordException
 from schemas.users import UserRequestAdd, UserAdd
 from services.base import BaseService

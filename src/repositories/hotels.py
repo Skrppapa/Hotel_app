@@ -1,7 +1,7 @@
 from datetime import date
 from sqlalchemy import select
 
-from exceptions import ConflictOfEqualDateException, ConflictDateException
+from src.exceptions import ConflictOfEqualDateException, ConflictDateException
 from src.models.rooms import RoomsOrm
 from src.repositories.base import BaseRepository
 from src.models.hotels import HotelsOrm
@@ -58,7 +58,3 @@ class HotelsRepository(BaseRepository):
         # Возвращается не список отелей, а итератор! (Точнее список кортежей. В каждом кортеже 1 объект из бд (одна запись))
 
         return [self.mapper.map_to_domain_entity(hotel) for hotel in result.scalars().all()]
-
-
-
-
