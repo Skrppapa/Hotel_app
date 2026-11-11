@@ -66,24 +66,25 @@ REST API сервис для поиска и бронирования номер
        -d redis:7.4
    ```
 
-5. **Запустите Nginx:**
-   ```bash
-    docker run --name booking_nginx \
-       --volume ./nginx.conf:/etc/nginx/nginx.conf \
-       --network=myNetwork \
-       --rm -p 80:80 nginx
-   ```
-6. **Запустите бэкенд и воркеры Celery:**
+5. **Запустите бэкенд и воркеры Celery:**
    Остальные сервисы поднимаются через Docker Compose:
    ```bash
    docker compose up -d --build
    ```
 
-7. **Примените миграции базы данных:**
+6. **Примените миграции базы данных:**
    *(Если они не применяются автоматически при старте бэкенда)*
    ```bash
    docker exec -it booking_back alembic upgrade head
    ```
+   
+7. **Запустите Nginx:**
+   ```bash
+    docker run --name booking_nginx \
+       --volume ./nginx.conf:/etc/nginx/nginx.conf \
+       --network=myNetwork \
+       -d -p 80:80 nginx
+   ```
 
-После запуска API будет доступно по адресу: http://localhost:7777 (или по порту, указанному в конфигурации).
-Интерактивная документация (Swagger): http://localhost:7777/docs
+После запуска API будет доступно по адресу: http://localhost
+Интерактивная документация (Swagger): http://localhost/docs
