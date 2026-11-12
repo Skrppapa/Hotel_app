@@ -85,7 +85,7 @@ REST API сервис для поиска и бронирования номер
        --volume /etc/letsencrypt:/etc/letsencrypt \
        --volume /var/lib/letsencrypt:/var/lib/letsencrypt \
        --network=myNetwork \
-       -d -p 80:80 nginx
+       -d -p 443:443 nginx
    ```
 
 После запуска API будет доступно по адресу: http://localhost
