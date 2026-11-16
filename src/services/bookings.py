@@ -1,5 +1,5 @@
 from api.dependencies import UserIdDep
-from src.exceptions import ObjectNotFoundException, RoomNotFoundException
+from src.exceptions import ObjectNotFoundException, RoomNotFoundException, check_date_to_after_date_from
 from schemas.bookings import BookingAddRequest, BookingAdd
 from schemas.hotels import Hotel
 from schemas.rooms import Room
@@ -21,6 +21,10 @@ class BookingsService(BaseService):
             user_id: UserIdDep,
             booking_data: BookingAddRequest
     ):
+
+        # Защита корректности дат
+        check_date_to_after_date_from(booking_data.date_from, booking_data.date_to)
+
         try:
             room: Room = await self.db.rooms.get_one(id=booking_data.room_id)  # Получаем объект комнаты
         except ObjectNotFoundException as ex:
