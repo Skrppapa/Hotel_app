@@ -31,9 +31,7 @@ Migrations:
 Tests:
   stage: test
   script:
-    - free -h
-    - docker run --rm --network myNetwork booking-api-image pytest -s -v
-    - free -h
+    - docker run --rm --network myNetwork -e PYTHONDONTWRITEBYTECODE=1 booking-api-image pytest -p no:cacheprovider -v
 
 
 deploy-job:
