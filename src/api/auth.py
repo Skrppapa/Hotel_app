@@ -39,7 +39,7 @@ async def login_user(
     return {"access_token": access_token}
 
 
-@router.get("/me")
+@router.get("/me", summary="🧑‍💻 Мой профиль")
 async def get_me(user_id: UserIdDep, db: DBDep):
     """Извлечение и расшифровка токена из аутентифицированного пользователя (реализовано через Depends)"""
     return await AuthService(db).get_one_or_none_user(user_id)
