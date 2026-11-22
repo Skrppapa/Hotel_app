@@ -31,10 +31,10 @@ Migrations:
 Tests:
   stage: test
   script:
-    script:
-      - free -h
-      - docker run --rm --network myNetwork booking-api-image pytest -s -v
-      - free -h
+    - free -h
+    - docker run --rm --network myNetwork booking-api-image pytest -s -v
+    - free -h
+
 
 deploy-job:
   stage: deploy
