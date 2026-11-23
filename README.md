@@ -1,92 +1,106 @@
 # API для бронирования отелей (Hotel Booking API)
 
-REST API сервис для поиска и бронирования номеров в отелях. Проект разрабатывается в рамках курса «Backend разработка на Python» (PyTex) с упором на чистую архитектуру и современные стандарты веб-разработки.
+REST API сервис для поиска и бронирования номеров в отелях. Проект разрабатывается в рамках курса «Backend разработка на Python» (PyTex) с упором на чистую архитектуру, автоматизацию тестирования и современные стандарты веб-разработки.
 
 ## 🛠 Технологии и стек
 
 **Язык и фреймворки:**
-* Python 3.10+
-* FastAPI
-* Pydantic (валидация данных)
+- Python 3.12+
+- FastAPI
+- Pydantic (валидация данных)
 
 **Базы данных и ORM:**
-* PostgreSQL (основная реляционная БД)
-* SQLAlchemy (взаимодействие с БД)
-* Alembic (управление миграциями)
-* Redis (кэширование данных и брокер для Celery)
+- PostgreSQL (основная реляционная БД)
+- SQLAlchemy (асинхронное взаимодействие с БД)
+- Alembic (управление миграциями)
+- Redis (кэширование данных и брокер для Celery)
 
-**Инфраструктура и фоновые задачи:**
-* Docker & Docker Compose (контейнеризация)
-* Celery (асинхронные задачи: обработка изображений отелей)
-* JWT (аутентификация и авторизация)
+**Инфраструктура, CI/CD и фоновые задачи:**
+- Docker & Docker Compose (контейнеризация)
+- GitLab CI/CD (автоматизация сборки, тестирования и деплоя на VPS)
+- Nginx & Certbot (Reverse Proxy, SSL/HTTPS)
+- Celery (асинхронные задачи: обработка изображений отелей)
+- JWT (аутентификация и авторизация)
 
 **Тестирование:**
-* Pytest (юнит- и интеграционные тесты)
+- Pytest & HTTPX (юнит- и асинхронные интеграционные тесты)
 
 ## ⚙️ Реализованный функционал
-* **Пользователи:** Регистрация, аутентификация по JWT-токену, управление профилем.
-* **Отели и номера:** Получение списка доступных отелей, фильтрация и просмотр свободных номеров на выбранные даты.
-* **Бронирование:** Создание бронирования, проверка доступности номера, защита от двойного бронирования (Race Condition).
-* **Производительность:** Кэширование частых запросов с использованием Redis для ускорения времени ответа API.
+- **Пользователи:** Регистрация, аутентификация по JWT-токену, управление профилем.
+- **Отели и номера:** Получение списка доступных отелей, фильтрация и просмотр свободных номеров на выбранные даты.
+- **Бронирование:** Создание бронирования, проверка доступности номера, защита от двойного бронирования (Race Condition).
+- **Производительность:** Кэширование частых запросов с использованием Redis для ускорения времени ответа API.
+
+## 🔄 CI/CD и автоматический деплой
+
+В проекте настроен пайплайн непрерывной интеграции и доставки (**GitLab CI/CD**), который запускается при пуше изменений в репозиторий и выполняет доставку кода на VPS через self-hosted GitLab Runner (Docker executor):
+
+1. **`build`** — подстановка переменных окружения из CI/CD Variables и сборка актуального Docker-образа приложения.
+2. **`migrations`** — автоматическое применение миграций базы данных PostgreSQL (`alembic upgrade head`).
+3. **`test`** — запуск юнит- и интеграционных тестов в изолированном контейнере (`pytest`) перед выкаткой обновления.
+4. **`deploy`** — перезапуск сервисов через `docker compose` и мягкая перезагрузка конфигурации реверс-прокси (`nginx -s reload`) без потери активных соединений.
 
 ## 🚀 Как запустить проект локально
 
 1. **Клонируйте репозиторий:**
-   ```bash
-   git clone [https://github.com/Skrppapa/Hotel_app.git](https://github.com/Skrppapa/Hotel_app.git)
-   cd Hotel_app
-   ```
 
-2. **Настройте переменные окружения:**
-   Создайте файл `.env` в корне проекта (пример можно посмотреть в `.env.example`) и укажите доступы к вашей БД PostgreSQL и Redis:
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+git clone [https://github.com/Skrppapa/Hotel_app.git](https://github.com/Skrppapa/Hotel_app.git)
+cd Hotel_app
+```
 
-3. **Создайте Docker-сеть:**
-   Для корректной связи контейнеров между собой необходимо создать общую сеть:
-   ```bash
-   docker network create myNetwork
-   ```
+2. **Настройте переменные окружения:** Создайте файл `.env` в корне проекта (пример можно посмотреть в `.env.example`) и укажите доступы к вашей БД PostgreSQL и Redis:
+
+```bash
+cp .env.example .env
+```
+
+3. **Создайте Docker-сеть:** Для корректной связи контейнеров между собой необходимо создать общую сеть:
+
+```bash
+docker network create myNetwork
+```
 
 4. **Запустите базы данных (PostgreSQL и Redis):**
-   ```bash
-   docker run --name booking_db \
-       -p 6432:5432 \
-       -e POSTGRES_USER=abcde \
-       -e POSTGRES_PASSWORD=abcde \
-       -e POSTGRES_DB=booking \
-       --network=myNetwork \
-       --volume pg-booking-data:/var/lib/postgresql/data \
-       -d postgres:16
 
-   docker run --name booking_cache \
-       -p 7379:6379 \
-       --network=myNetwork \
-       -d redis:7.4
-   ```
+```bash
+docker run --name booking_db \
+	-p 6432:5432 \
+	-e POSTGRES_USER=abcde \
+	-e POSTGRES_PASSWORD=abcde \
+	-e POSTGRES_DB=booking \
+	--network=myNetwork \
+	--volume pg-booking-data:/var/lib/postgresql/data \
+	-d postgres:16
 
-5. **Запустите бэкенд и воркеры Celery:**
-   Остальные сервисы поднимаются через Docker Compose:
-   ```bash
-   docker compose up -d --build
-   ```
+docker run --name booking_cache \
+	-p 7379:6379 \
+	--network=myNetwork \
+	-d redis:7.4
+```    
 
-6. **Примените миграции базы данных:**
-   *(Если они не применяются автоматически при старте бэкенда)*
-   ```bash
-   docker exec -it booking_back alembic upgrade head
-   ```
-   
+5. **Запустите бэкенд и воркеры Celery:** Остальные сервисы поднимаются через Docker Compose:
+
+```bash
+docker compose up -d --build
+```
+
+6. **Примените миграции базы данных:**_(Если они не применяются автоматически при старте бэкенда)_
+
+```bash
+docker exec -it booking_back alembic upgrade head
+```
+
 7. **Запустите Nginx:**
-   ```bash
-    docker run --name booking_nginx \
-       --volume ./nginx.conf:/etc/nginx/nginx.conf \
-       --volume /etc/letsencrypt:/etc/letsencrypt \
-       --volume /var/lib/letsencrypt:/var/lib/letsencrypt \
-       --network=myNetwork \
-       -d -p 443:443 nginx
-   ```
 
-После запуска API будет доступно по адресу: http://localhost
-Интерактивная документация (Swagger): http://localhost/docs
+```bash
+docker run --name booking_nginx \
+	--volume ./nginx.conf:/etc/nginx/nginx.conf \
+	--volume /etc/letsencrypt:/etc/letsencrypt \
+	--volume /var/lib/letsencrypt:/var/lib/letsencrypt \
+	--network=myNetwork \
+	-d -p 443:443 nginx
+``` 
+
+После запуска API будет доступно по адресу: `http://localhost`
+Интерактивная документация (Swagger): `http://localhost/docs`
