@@ -44,63 +44,64 @@ REST API сервис для поиска и бронирования номер
 
 1. **Клонируйте репозиторий:**
 
-```bash
-git clone [https://github.com/Skrppapa/Hotel_app.git](https://github.com/Skrppapa/Hotel_app.git)
-cd Hotel_app
-```
+	```bash
+	git clone [https://github.com/Skrppapa/Hotel_app.git](https://github.com/Skrppapa/Hotel_app.git)
+	cd Hotel_app
+	```
 
 2. **Настройте переменные окружения:** Создайте файл `.env` в корне проекта (пример можно посмотреть в `.env.example`) и укажите доступы к вашей БД PostgreSQL и Redis:
 
-```bash
-cp .env.example .env
-```
+	```bash
+	cp .env.example .env
+	```
 
 3. **Создайте Docker-сеть:** Для корректной связи контейнеров между собой необходимо создать общую сеть:
 
-```bash
-docker network create myNetwork
-```
+	```bash
+	docker network create myNetwork
+	```
 
 4. **Запустите базы данных (PostgreSQL и Redis):**
 
-```bash
-docker run --name booking_db \
-	-p 6432:5432 \
-	-e POSTGRES_USER=abcde \
-	-e POSTGRES_PASSWORD=abcde \
-	-e POSTGRES_DB=booking \
-	--network=myNetwork \
-	--volume pg-booking-data:/var/lib/postgresql/data \
-	-d postgres:16
+	```bash
+	docker run --name booking_db \
+		-p 6432:5432 \
+		-e POSTGRES_USER=abcde \
+		-e POSTGRES_PASSWORD=abcde \
+		-e POSTGRES_DB=booking \
+		--network=myNetwork \
+		--volume pg-booking-data:/var/lib/postgresql/data \
+		-d postgres:16
 
-docker run --name booking_cache \
-	-p 7379:6379 \
-	--network=myNetwork \
-	-d redis:7.4
-```    
+	docker run --name booking_cache \
+		-p 7379:6379 \
+		--network=myNetwork \
+		-d redis:7.4
+	```
 
 5. **Запустите бэкенд и воркеры Celery:** Остальные сервисы поднимаются через Docker Compose:
 
-```bash
-docker compose up -d --build
-```
+	```bash
+	docker compose up -d --build
+	```
 
-6. **Примените миграции базы данных:**_(Если они не применяются автоматически при старте бэкенда)_
+6. **Примените миграции базы данных:** (Если они не применяются автоматически при старте бэкенда)
 
-```bash
-docker exec -it booking_back alembic upgrade head
-```
+	```bash
+	docker exec -it booking_back alembic upgrade head
+	```
 
 7. **Запустите Nginx:**
 
-```bash
-docker run --name booking_nginx \
-	--volume ./nginx.conf:/etc/nginx/nginx.conf \
-	--volume /etc/letsencrypt:/etc/letsencrypt \
-	--volume /var/lib/letsencrypt:/var/lib/letsencrypt \
-	--network=myNetwork \
-	-d -p 443:443 nginx
-``` 
+	```bash
+	docker run --name booking_nginx \
+		--volume ./nginx.conf:/etc/nginx/nginx.conf \
+		--volume /etc/letsencrypt:/etc/letsencrypt \
+		--volume /var/lib/letsencrypt:/var/lib/letsencrypt \
+		--network=myNetwork \
+		-d -p 443:443 nginx
+	``` 
 
 После запуска API будет доступно по адресу: `http://localhost`
+
 Интерактивная документация (Swagger): `http://localhost/docs`
